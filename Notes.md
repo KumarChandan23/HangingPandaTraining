@@ -51,3 +51,11 @@ const Welcome = (props) => {
 };
 
 export default Welcome;
+
+# Conditional Rendering
+conditional rendering means displaying differenct component or user interfase on certain condition
+in rect we can achieve it using
+1. if else
+2. Ternary Operator
+3. Logincal End
+4. switch case 
