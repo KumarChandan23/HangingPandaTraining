@@ -98,8 +98,28 @@ composition is pattern in react where we combine multiple components to build re
 3. To share login easily by creating custome hooks
 4. To manage state and side effects in functional components
 
-✅ common hooks
-useState(), useEffect(), useCallback(), useMemo(), useContext(), useReducer(), useReff(), etc..
+✅ Basic React Hooks : 
+- useState(), useEffect(), useContext()
+
+✅ Essential React Hooks: 
+- useRef, useReducere(), useCallback(),useMemo(), useImperativeHandle(), useLayoutEffect(), useDebugValue()
+
+✅ React 18+ Hooks (Experimental / Stable)
+- useId, useTransition(), useDeferredValue(), useSyncExternalStore(), useInsertionEffect()
+
+✅ Custom Hooks (You Can Create)
+- useFetch(url), useAuth(), useForm(), useToggle(), useLocalStorage(), useClickOutside(), useMediaQuery()
+
+✅ React Router Hooks
+- useNavigate(), useParams(), useLocation(), useSearchParams(), useOutletContext()
+
+✅ React Form Libraries (Popular Hooks)
+- useFormik(), useForm(), useQuery(), useMutation()
+
+▶️ Which Hooks Should You Master First?
+    Must Know (Beginner–Intermediate): useState, useEffect, useContext
+    Advance/Optimization: useReducer, useCallback, useMemo, useRef
+    Pro: useLayoutEffect, useImperativeHandle, useSyncExternalStore, useTransition
 
 # ✅ useState()
 - It is React hook that allow functional component to manange state.
@@ -146,6 +166,42 @@ useState(), useEffect(), useCallback(), useMemo(), useContext(), useReducer(), u
     - useEffect(()=>{},[count, fetchdata, items])
     - it will executes every time when ever anyone of then updates
 
+
+
+# ✅ useRef()
+- It is React hook that creates mutable reference
+- It stores value and access elements withou causing the page reload and updates
+- It can use for Referencing Dom element like getElementByID
+- It keep track the previous value between renders
+- Syntax: 
+    const myRef = useRef(username)
+    myRef.current : holds the value
+    Changin myRef.current does not cause re-render
+
+# useImperativeHandle()
+- It is react hook used with forward ref to customize the instance value that is exposed to the parent component when using ref.
+- Syntax: 
+    useImperativeHandle(ref, () => {
+    return {
+        yourCustomMethod: () => { ... }
+    }
+    }, [dependencies])
+
+
+# ✅ memo() 
+- In React memo is higher order component that memoize the component.
+- It prevents unnecessary re-renders by only re-rendering if prop changes
+- Syntax: 
+       - const momoizedComponent = React.memo(Component)
+       - export default React.memo(MyComponent);
+       - any one of them
+▶️ How it works
+ When a component is wrapped with React.memo()
+ - It compares previous props with new props
+ - If props have not changed then it does not re-renders component
+ - If props have changed then it re-renders the component
+
+
 # ✅ useMemo()
 - It is React hook that optimses performances by memoizing expensive calculation
 - It prevents unnecessary calculation by storing the computated value in an internal cache
@@ -167,12 +223,119 @@ useState(), useEffect(), useCallback(), useMemo(), useContext(), useReducer(), u
 ▶️ when to use useMemo()
 - in case filter , dealing with last data  and heaby loop
 
-# useRef()
-- It is React hook that creates mutable reference
-- It stores value and access elements withou causing the page reload and updates
-- It can use for Referencing Dom element like getElementByID
-- It keep track the previous value between renders
+# ✅ useCallback() 
+- It is React hooks used to momoize functions.
+- It prevents function from being recreated on every render unless dependency changes
+- This is usefull for performance optimization, 
+- Especially when passing function as props to child component that rely on referencial equality to avoid unnecessary re-renders.
 - Syntax: 
-    const myRef = useRef(username)
-    myRef.current : holds the value
-    Changin myRef.current does not cause re-render
+        - const memoizedCallback = useCallback(()=>{ },[dependencies])
+        - ()=>{} : momoized function
+        - [dependency] : array dependency, if any one then them changes function will be rec-created each  time
+▶️ Why use useCallback()?
+- whithout useCallback function will be re-created every time when component re-renders
+- whit useCallback function will only recreated when dependency array changes 
+
+# ✅ Difference between memo(), useMemo() and useCallback()
+▶️ meme() : for component
+- const memoizeCompo = React.memo(component)
+- Prevents a functional component from re-rendering unless its props change even parent compo re-renders.
+- Use it when child component need to  re-render only when props change
+
+▶️ useMemo() : for memoizing values
+- const memoizedValue = useMemo(() => computeSomething(a, b), [a, b]);
+- It return memoized resutl of a function
+- It runs the function only if dependency changes
+- It is usefull when we are performing expensive calculation or looping through multiple times
+- It is usefull when we want to aviod re-calculation for same value
+
+▶️ useCallback() : for memoizing function
+- const memoizedFn = useCallback(() => { doSomething(); }, [deps]);
+- It returns same function reference unless dependency changes
+- We pass function as props to React.momo() component
+- It is usefull when we want to prevent unnecessary re-renders due to change in function reference
+
+▶️ Combine Example
+    const Parent = () => {
+    const [count, setCount] = useState(0);
+
+    const memoizedFn = useCallback(() => {
+        console.log("child clicked");
+    }, []);
+
+    const expensive = useMemo(() => heavyComputation(count), [count]);
+
+    return (
+        <>
+        <MemoizedChild onClick={memoizedFn} />
+        <div>{expensive}</div>
+        <button onClick={() => setCount(count + 1)}>+</button>
+        </>
+    );
+    };
+
+    const MemoizedChild = React.memo(({ onClick }) => {
+    console.log("Child rendered");
+    return <button onClick={onClick}>Click</button>;
+    });
+
+
+# ✅ useReducer()
+
+- It is React hook that works like mini Redux inside our component
+- It is an alternaivte to useState() hook
+- It is usefull when
+    > Complex Forms (Multiple Fields + Logic)
+    > Todo List / Shopping Cart / Multi-step Wizards for feature like add, update, delete and reset
+    > Managing Global-ish State Without Context API. example like Quize app (current querion, user, answer, timer, score)
+    > Undo/Redo Functionality. like: {past: [],present: currentValue,future: []}
+    > Loading/Error/Success States in Async Calls
+        ▶️ with useState
+        const [loading, setLoading] = useState(false)
+        const [error, setError] = useState(null)
+        const [data, setData] = useState(null)
+        ▶️ with useReducer
+        switch (action.type) {
+                case 'FETCH_INIT':
+                case 'FETCH_SUCCESS':
+                case 'FETCH_ERROR':
+                }
+
+- Syntax:
+    const [state, dispatch] = useReducer(reducer, initialValue)
+    > state : current state
+    > dispatch : a function to send an action to reducer
+    > reducer : a function that descrives how state changes
+    > initialValue : the starting state value
+
+
+
+# ✅ Context API
+- It is built way in react to share global data between components without having to pass props manually at every level
+- it can share data like useifo, theme, language and cart state etc...
+
+▶️ How it works
+1. create context
+    export const UserContext = createContext();
+2. provide context
+     const user = {name: "kumar", age:"89", gender:"other"}
+     <UserContext.Provider value={user}>
+      <Profile />
+    </UserContext.Provider>
+3. consume context
+    const user = useContext(UserContext);
+
+# ✅ Custom hook
+- It is javaScript function that start with use and lets you reuse statefull logic accross multiple components. 
+- It is usefull when multiple component needs same login 
+- custom hook keep our code clean and readable
+- It avoid deplication of code
+- It separates logic form UI
+- Syntax: 
+        function useCustomehook(){};
+▶️ when to use it
+1. useFetch(): fetching data using API
+2. useAuth() : user Authentication
+3. useDebounce(): Handle debouncing input
+4. useCart(): Centeralize cart login like add, revove, reset, etc..
+
