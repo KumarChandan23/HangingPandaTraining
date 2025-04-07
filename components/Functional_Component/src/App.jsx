@@ -20,6 +20,7 @@ import Functional_Component from './Functional_Component'
 import ContextApi from './components/hooks/contextApi/ContextApi'
 import ProductListUsinghook from './components/hooks/customeHook/ProductListUsinghook'
 import Navbar from './components/tailwindCSS/Navbar'
+import Container from './components/tailwindCSS/container'
 
 function App() {
 
@@ -46,7 +47,8 @@ function App() {
       {/* <ComplexForm /> */}
       {/* <ContextApi /> */}
       {/* <ProductListUsinghook /> */}
-      <Navbar />
+      {/* <Navbar /> */}
+      <Container />
     </>
   )
 }
