@@ -339,3 +339,54 @@ composition is pattern in react where we combine multiple components to build re
 3. useDebounce(): Handle debouncing input
 4. useCart(): Centeralize cart login like add, revove, reset, etc..
 
+
+# Tailwind CSS
+
+▶️ Installation 
+- create vite react project
+- npm install tailwindcss @tailwindcss/vite : in terminal
+- create file with vite.config.js 
+    import { defineConfig } from 'vite'
+    import tailwindcss from '@tailwindcss/vite'
+    export default defineConfig({
+    plugins: [
+        tailwindcss(),
+    ],
+    })
+- create globle CSS file and pase this : @import "tailwindcss";
+- npm run dev
+
+✅ Layout
+# Container Break point
+- sm : 640px
+- md : 768px
+- lg : 1024px
+- xl : 1280px
+- 2xl : 1536px
+
+- we can override its break point
+// tailwind.config.js
+module.exports = {
+  theme: 
+    container: {
+      center: true,
+      padding: '1rem', // adds horizontal padding
+      screens: {
+        sm: '600px',
+        md: '728px',
+        lg: '984px',
+        xl: '1240px',
+        '2xl': '1496px',
+      },
+    },
+  },
+};
+
+# Box-sizing
+- box-content: it add paddig and margin outsite of box and increases size.
+- box-border : padding and border are include inside box. it does not increase size.
+
+# Display
+- inline: default. it contains context width and height. and does not access width and height.
+- inline-block: it behaves like inline and accepts height and width.
+- block: it occupies complete with of device
