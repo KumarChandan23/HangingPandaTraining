@@ -19,8 +19,7 @@ import PropComponent from './components/props/PropComponent'
 import Functional_Component from './Functional_Component'
 import ContextApi from './components/hooks/contextApi/ContextApi'
 import ProductListUsinghook from './components/hooks/customeHook/ProductListUsinghook'
-import Navbar from './components/tailwindCSS/Navbar'
-import Container from './components/tailwindCSS/container'
+import Tailwind from './components/tailwindCSS/Tailwind'
 
 function App() {
 
@@ -47,8 +46,7 @@ function App() {
       {/* <ComplexForm /> */}
       {/* <ContextApi /> */}
       {/* <ProductListUsinghook /> */}
-      {/* <Navbar /> */}
-      <Container />
+        <Tailwind />
     </>
   )
 }

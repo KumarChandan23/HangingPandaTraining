@@ -11,8 +11,8 @@ function App() {
   return (
   <>
     {/* <CreateTodo /> */}
-    {/* <TodoList /> */}
-    <Todo />
+    <TodoList />
+    {/* <Todo /> */}
   </>
   )
 }
