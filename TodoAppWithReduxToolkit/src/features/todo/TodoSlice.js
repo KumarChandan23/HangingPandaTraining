@@ -50,14 +50,17 @@ const todoSlice = createSlice({
             );
         },
 
-        filterTodos: (state, action) => {
-            const searchTerm = action.payload.toLowerCase();
+        SearchTodos: (state, action) => {
             state.filteredTodos = state.todos.filter(todo =>
-                todo.text.toLowerCase().includes(searchTerm)
+                todo.text.toLowerCase().includes(action.payload.toLowerCase())
             );
         },
+        CompletedTodos: (state, action)=>{
+            console.log(action)
+        }
+
     }
 });
 
-export const { addTodos, deleteTodo, updateTodo, toggleComplete, filterTodos } = todoSlice.actions;
+export const { addTodos, deleteTodo, updateTodo, toggleComplete, SearchTodos } = todoSlice.actions;
 export default todoSlice;

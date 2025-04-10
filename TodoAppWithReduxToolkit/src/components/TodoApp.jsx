@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodos, deleteTodo, filterTodos, toggleComplete, updateTodo } from '../features/todo/TodoSlice.js';
+import { addTodos, deleteTodo, SearchTodos, toggleComplete, updateTodo } from '../features/todo/TodoSlice.js';
 
 const TodoApp = () => {
     const [inputTodo, setInputTodo] = useState('');
@@ -38,13 +38,13 @@ const TodoApp = () => {
 
     const handleFilterTask = () => {
         setIsSearchClicked(!isSearchClicked);
-        dispatch(filterTodos(inputSearch.taskSearch));
+        dispatch(SearchTodos(inputSearch.taskSearch));
     };
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
         setInputSearch({ taskSearch: value });
-        dispatch(filterTodos(value));
+        dispatch(SearchTodos(value));
     };
 
     return (
@@ -137,6 +137,8 @@ const TodoApp = () => {
                     </li>
                 ))}
             </ul>
+            {/* Completed To-Do List */}
+
         </div>
     );
 };
