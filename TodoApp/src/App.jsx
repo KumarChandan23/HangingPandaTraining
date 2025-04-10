@@ -12,9 +12,12 @@ function App() {
   return (
   <>
     {/* <CreateTodo /> */}
+
     {/* <TodoList /> */}
     {/* <Todo /> */}
     <TodoApp />
+    {/* <Todo /> */}
+
   </>
   )
 }
