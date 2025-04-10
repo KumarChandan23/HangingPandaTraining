@@ -3,7 +3,7 @@
 
 ▶️ Installation 
 - create vite react project
-- npm install tailwindcss @tailwindcss/vite : in terminal
+- In terminal : npm install tailwindcss @tailwindcss/vite 
 - create file with vite.config.js 
     import { defineConfig } from 'vite'
     import tailwindcss from '@tailwindcss/vite'
