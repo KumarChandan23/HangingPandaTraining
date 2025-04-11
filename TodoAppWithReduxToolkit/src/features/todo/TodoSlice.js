@@ -2,12 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Load from localStorage
 const loadTodos = () => {
-    const data = localStorage.getItem('todos');
-    return data ? JSON.parse(data) : [];
+    try {
+        const todos = localStorage.getItem('todos');
+        return todos ? JSON.parse(todos) : [];
+    } catch (err) {
+        console.error("Failed to load todos from localStorage", err);
+        return [];
+    }
 };
 
 const saveTodos = (todos) => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    try {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    } catch (err) {
+        console.error("Failed to save todos to localStorage", err);
+    }
 };
 
 const todoSlice = createSlice({
@@ -25,7 +34,7 @@ const todoSlice = createSlice({
             saveTodos(newTodos);
             return newTodos;
         },
-        deleteAll: (state)=>{
+        deleteAll: () => {
             saveTodos([]);
             return [];
         },
@@ -38,20 +47,14 @@ const todoSlice = createSlice({
             }
         },
         toggleComplete: (state, action) => {
-            const todo = state.find(todo => todo.id === action.payload);
-            if (todo) {
-                todo.completed = !todo.completed;
-                saveTodos(state);
-            }
+            const updatedTodos = state.map((todo) =>
+                todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
+            );
+            saveTodos(updatedTodos); // <== this line saves to localStorage
+            return updatedTodos;
         },
-        clearCompleted: (state) => {
-            const newTodos = state.filter(todo => !todo.completed);
-            saveTodos(newTodos);
-            return newTodos;
-        },
-       
     }
 });
 
-export const { addTodos, updateTodo, deleteTodo,deleteAll,  toggleComplete } = todoSlice.actions;
+export const { addTodos, updateTodo, deleteTodo, deleteAll, toggleComplete } = todoSlice.actions;
 export default todoSlice;
