@@ -2,65 +2,59 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Load from localStorage
 const loadTodos = () => {
-    const data = localStorage.getItem('todos');
-    return data ? JSON.parse(data) : [];
+    try {
+        const todos = localStorage.getItem('todos');
+        return todos ? JSON.parse(todos) : [];
+    } catch (err) {
+        console.error("Failed to load todos from localStorage", err);
+        return [];
+    }
 };
 
 const saveTodos = (todos) => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    try {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    } catch (err) {
+        console.error("Failed to save todos to localStorage", err);
+    }
 };
 
 const todoSlice = createSlice({
     name: "todos",
-    initialState: {
-        todos: loadTodos(),
-        filteredTodos: loadTodos()
-    },
+    initialState: loadTodos(),
     reducers: {
         addTodos: (state, action) => {
             const newTodo = { id: Date.now(), text: action.payload, completed: false };
-            state.todos.push(newTodo);
-            state.filteredTodos = state.todos;
-            saveTodos(state.todos);
+            state.unshift(newTodo);
+            saveTodos(state);
         },
 
         deleteTodo: (state, action) => {
-            state.todos = state.todos.filter(todo => todo.id !== action.payload);
-            state.filteredTodos = state.filteredTodos.filter(todo => todo.id !== action.payload);
-            saveTodos(state.todos);
+            const newTodos = state.filter(todo => todo.id !== action.payload);
+            saveTodos(newTodos);
+            return newTodos;
         },
-
+        deleteAll: () => {
+            saveTodos([]);
+            return [];
+        },
         updateTodo: (state, action) => {
             const { id, newText } = action.payload;
-            const todo = state.todos.find(todo => todo.id === id);
+            const todo = state.find(todo => todo.id === id);
             if (todo) {
                 todo.text = newText;
                 saveTodos(state.todos);
             }
-            // Also update filteredTodos
-            state.filteredTodos = state.todos.filter(todo =>
-                todo.text.toLowerCase().includes('')
-            );
         },
         toggleComplete: (state, action) => {
-            state.filteredTodos = state.filteredTodos.map((todo) =>
-                todo.id === action.payload
-                    ? { ...todo, completed: !todo.completed }
-                    : todo
+            const updatedTodos = state.map((todo) =>
+                todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
             );
+            saveTodos(updatedTodos); // <== this line saves to localStorage
+            return updatedTodos;
         },
-
-        SearchTodos: (state, action) => {
-            state.filteredTodos = state.todos.filter(todo =>
-                todo.text.toLowerCase().includes(action.payload.toLowerCase())
-            );
-        },
-        CompletedTodos: (state, action)=>{
-            console.log(action)
-        }
-
     }
 });
 
-export const { addTodos, deleteTodo, updateTodo, toggleComplete, SearchTodos } = todoSlice.actions;
+export const { addTodos, updateTodo, deleteTodo, deleteAll, toggleComplete } = todoSlice.actions;
 export default todoSlice;
