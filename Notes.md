@@ -339,3 +339,6 @@ composition is pattern in react where we combine multiple components to build re
 3. useDebounce(): Handle debouncing input
 4. useCart(): Centeralize cart login like add, revove, reset, etc..
 
+
+# new pull requires 4 
+https://github.com/KumarChandan23/HangingPandaTraining/pull/4
