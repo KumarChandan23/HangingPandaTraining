@@ -20,6 +20,8 @@ import Functional_Component from './Functional_Component'
 import ContextApi from './components/hooks/contextApi/ContextApi'
 import ProductListUsinghook from './components/hooks/customeHook/ProductListUsinghook'
 import Tailwind from './components/tailwindCSS/Tailwind'
+import FakeStore from './components/tenStack/FakeStore'
+import { TenStack } from './components/tenStack/TenStack'
 
 function App() {
 
@@ -46,7 +48,9 @@ function App() {
       {/* <ComplexForm /> */}
       {/* <ContextApi /> */}
       {/* <ProductListUsinghook /> */}
-        <Tailwind />
+        {/* <Tailwind /> */}
+        {/* <FakeStore /> */}
+        <TenStack />
     </>
   )
 }
