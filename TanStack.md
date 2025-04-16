@@ -1,5 +1,5 @@
 
-# Syllabus
+# Syllabus TanStack
 
 🧠 1. Introduction to TanStack Query
 - What is TanStack Query (formerly React Query)?
@@ -98,7 +98,7 @@
 
 
 
-# What is React Query
+# What is TanStack or React Query
 - React query is powerfull data fetching and state management library.
 - It is design to simplyfiy handling of server side state.
 - It is mainly usefull for Data fetning, Create Data,  Updating Data, Deleting Data, Caching, background updates, pagination, etc...
@@ -120,17 +120,9 @@
 - Quer invalidation.
 - Works with all api(axios , fetch, etc...)
 
-# Automatic Caching
-- caching is the process of storing fetched data remporarily.So that next time, If you need that same data you can easily retrive it without making another network request.
-- React Query automatically handles this for you when you use useQuery hook.
-- This is called automatic caching.
-- when you call the useQuery
-    -- it checks first in cache memory
-    -- if not found then it makes network call and stores that in cache.
-    -- next it provide same data from caches without making network call.
-
 # Pagination and Infinite Scroll
 - pagination is a technique where the data is split into multiple pages, and user can naginate between these pages to view differenct chunks of data.
+
 
 # Setup
 => Installation : npm install @tanstack/react-query 
@@ -144,15 +136,90 @@
 - {data, isError, isLoading, error} = useQuery({ queryKey:["products"], queryFn: ()=>{}})
 
 
+
+# 🔍 1. What is queryClient?
+- QueryClient is an instance of queryClient class
+- QueryClient is like a brain that stores and manages all the server states
+- server states like data fetching, caching, mutation, etc.
+- It caches the query result
+- It tracks the status of requests (like- loading, error, success)
+- Automatically refetches slate data.
+- It handle retry, background updates and more.
+- Syntax: const queryClient = new QueryClient();
+
 # Queries
 - A query is used to fetch data from API.
-- A query key is unique identifire wich can be string or an array.
 - A query is used internally to cache the result and identify the query.
+- A query key is unique identifire wich can be string or an array.
 - Example:
          const { data, isLoading, error } = useQuery('todos', fetchTodos);
     Here todos is the key and fetchTodos is the function which fetches the data.
 
-# Query results: 
+# What is query key ?
+- query key is unique indentifire for each query
+- query is used for fetching data, invalidating cache, refetching menually.
+- query can be simple sting or array (["key"]) or dynamic key with parameters (["key". userId]) 
+- query help to identify when query is considered as slate or fresh.
+
+# What is queryFn (query function)
+- queryFn is the function which is used to fetch make network call for fetching data.
+
+# What is Caching
+- caching is the process of storing fetched data temporarily in cache memory.So that next time, If you need that same data you can easily retrive from cache without making another network request.
+- React Query automatically handles this for you when you use useQuery hook.
+- This is called automatic caching.
+- when you call the useQuery
+1. It checks first in cache memory
+2. If not found then it makes network call and stores that in cache.
+3. Next it provide same data from caches without making network call.
+
+# What is Backgrund refetching
+- Background refetching means automatically updating data in the background without disrupting UI.
+- Simply it means data is re-fetched without -
+1. showing loading snniper on userInterface
+2. old data is shown untill the new data is successfully fetched.
+3. user can still intract with UI.
+
+# ⚙️ How does background refetching work in TanStack Query?
+- It refetches data when window refocuses (refetchOnWindowFocus)
+- It refetches data when network reconnects (refetchOnReconnect)
+- It refetches data at interval
+- Syntax: 
+            useQuery({
+                queryKey: ["key"],
+                queryFn:()=>{},
+                slateTime: 1000 * 60, // 1 minut
+                refetchOnWindowFocus:true,
+                refetchIntervalTime:5000 / 5 second
+            })
+- Old data is still shown
+- we can check isFetching === true(it won't trigger isLoadin again).
+- when new data comes, cache and UI updates automatically.
+
+
+# 📦 2. What is QueryClientProvider?
+- QueryClientProvider is React context provider
+- we wrap QueryClientProvier around root component
+- It provides access of Queryclient to all our applications component
+- It helps our application to share state with different - different components
+- Syntax <QuetyClientProvier> <App /> </QueryClientProvier>
+
+# Mutations
+- It is used for creating, updating, and delete data on the server
+- 👜 TanStack provides useMutation hook.
+- useMutation hook triggers network request on user actions
+- useMutation hook is used to handle create, update, and delete data on server. 
+- useMutation hook also handles state like error, loading and success.
+- useMutation hook also updates the cache memory so to provide latest data.
+- useMutation hook is use full for submitting form , updating userProfile, deleting prodcuts 
+- Syntax: const mutation = useMutation({
+    mutationFn:()=>{},
+    onSuccess:(data)=>{},
+    onError:(error)=>{}
+})
+ 
+# 🛞 Mutation results: 
+-  useMutation retuns value like
 - data : resource
 - isLoading: A flag that indicates query is still loading.
 - isError: A boolean indicating if an error occured.
@@ -160,8 +227,20 @@
 - error: Error object, if any.  
 - Query Pagination:
 
+# What is Auto Retries.
+- when a query fails due to network error, Tanstack query automatically retries to fetch data without writing extray logic for this.
+- Syntax: useQuery({
+    queryKey:["key"],
+    queryFn:()=>{},
+    retry: true // 3 time by default
+    retrydelay:  attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
+})
+- retry:true // 3 times retry by default
+- retry: false // disable retry. fetch data only once
+- retry:5 // 5 times retries only
+
 # useQuery()
-- It is used for Read means fetch data
+- It is used for Read data.
 
 # useMutation()
 - It is used for Write means create, update, delete
