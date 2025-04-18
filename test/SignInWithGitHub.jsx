@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GithubAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { auth } from '../firebaseConfig';
 
 const SigninWithGithub = () => {
   const [userDetails, setUserDetails] = useState(null);

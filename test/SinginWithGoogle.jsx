@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { auth } from '../firebaseConfig';
 
 const SigninWithGoogle = () => {
   const [userDetails, setUserDetails] = useState(null);

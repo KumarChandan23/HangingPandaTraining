@@ -6,9 +6,7 @@
 
 # FireBase features
 1. Authentication: Easy sign-in with email & password and Google, Facebook, Twitter and more
-2. FireBase store: Real time no-sql cloud database. (document or collection).
-3. Cloud Storage: 
-4. Hoisting: Deploy Ststic web pase or app
+2. Firestore Database: 
 
 # Firebase Authentication
 - It is server provided by Firebase that helps you easy and secure authentication to web and mobile app.
@@ -65,3 +63,40 @@
 # for login with google change only
 
 GithubAuthProvider -> GoogleAuthProvider
+
+async function LoginWithGoogle()=>{
+    const provider = new GoogleAuthProvider():
+    try{
+        const result = await SignInWithGoogle(Auth, provider);
+        const user = result.user;
+        const credentials = GoogleAuthProvider.credentialFromResult(result);
+        const token = credentails.token;
+    }catch(error){
+        console.log("Error occured while Login with Google",error)
+    }
+}
+
+# Firestore Database
+- It is also know as cloud firestore.
+- Firestore is no-sql cloud database from firebase.
+- firestore allow you to store, sync and query data for apps.
+- It is part of firebase
+- It is used for mobile, web and server development.
+- It is usefull for Real-time update, secure, data stored in cloud and easy to use in react. 
+
+
+# upload image 
+1. npm i -g firebase-tools
+2. firebase login
+3. create cors.json
+[
+  {
+    "origin": ["http://localhost:5173"],
+    "method": ["GET", "POST", "PUT", "DELETE"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": ["Content-Type", "Authorization"]
+  }
+]
+4. firebase init
+5. Deploy the CORS settings to Firebase Storage: firebase storage:rules:set cors.json
+
