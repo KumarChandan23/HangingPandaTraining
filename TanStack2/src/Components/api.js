@@ -1,7 +1,8 @@
 import axios from "axios"
 
 export const FetchData = async () => {
-    const url = "https://dummyjson.com/todos";
+    const url = 'https://dummyjson.com/todos';
+    console.log(url)
     try {
         const response = await axios.get(url)
         console.log(response.data)

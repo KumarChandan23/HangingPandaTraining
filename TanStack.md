@@ -46,13 +46,8 @@
 📦 7. Query Caching & Performance
 - How caching works
 - Persistent cache with localStorage or IndexedDB
-- Hydration/dehydration for SSR/Next.js
 - Memory vs persistent cache
 
-🔁 8. Dependent Queries
-- Chaining queries
-- enabled flag for conditional fetching
-- Wait for previous query to complete
 
 🧪 9. Pagination & Infinite Queries
 - Traditional pagination with pageParam
@@ -158,7 +153,7 @@
 # What is query key ?
 - query key is unique indentifire for each query
 - query is used for fetching data, invalidating cache, refetching menually.
-- query can be simple sting or array (["key"]) or dynamic key with parameters (["key". userId]) 
+- query type is  array (["key"]) or dynamic key with parameters (["key", userId]) 
 - query help to identify when query is considered as slate or fresh.
 
 # What is queryFn (query function)
@@ -239,8 +234,37 @@
 - retry: false // disable retry. fetch data only once
 - retry:5 // 5 times retries only
 
-# useQuery()
-- It is used for Read data.
+# What is useQuery()
+- It is Tanstack hook that allows you to fetch, cache and synchronize data in react components.
+- It is used when we want to Read data (get request) from api.
+- syntax: 
+    import {useQuery} from "@tanstack/react-query"
+    const {data, isLoading, isError, error, refetch} = useQuery({ queryFn:()=>{},queryKey:['key'],})
+- ▶️ useQuery() all states
+1. data : type any and get data using queryFn.
+2. error: type Error and throw error if query fails.
+6. isError: type boolean and true if query errored.
+3. isLoading: type boolean and true during initial load (no cache yet).
+4. isFetching: type boolean and true whene ever query is fetching.
+5. isSuccess: type boolean and true when data is fetched successfully.
+7. isPending: type boolean and true while loading or refetching.
+8. isFetchedAfterMount: type boolean and true if it was fetched after component mount.
+9. isSlate: type boolean and true if data is slate.
+10. refetch: type promise and Manually refetch the query.
+11. fetchStatus: type "idle" and "fetching".
+12. status: type "loading" and "error"
+
+- ▶️ useQuery() all parameters
+1. queryKey: type Array and it is unique indentifire for fetching, cacheing, etc...
+2. queryFn: a function which is used to fetch data using api.
+3. enabled: type boolean and it deside wheather a query run automatically. default true
+4. retry: type boolan and default retry 3 but we chage it with anu number.
+5. retryDelay : type number and used for delaying refetching data.
+6. refetchOnWindowFocus: type boolean and default is true and used when window/tab regains focus.
+7. refetchInterval: 
+8. refetchIntervalInBackground: type boolean allow pooling background tab default false.
+9. staleTime: 
+10 cacheTime: data is store in cache for 5 (300000 ms) minuts in default but you can change. 
 
 # useMutation()
 - It is used for Write means create, update, delete
