@@ -86,17 +86,56 @@ async function LoginWithGoogle()=>{
 
 
 # upload image 
-1. npm i -g firebase-tools
-2. firebase login
-3. create cors.json
-[
-  {
-    "origin": ["http://localhost:5173"],
-    "method": ["GET", "POST", "PUT", "DELETE"],
-    "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "Authorization"]
-  }
-]
-4. firebase init
-5. Deploy the CORS settings to Firebase Storage: firebase storage:rules:set cors.json
+1. const [image, setImage] = useState(null);
+2. const uploadImage = async ()=>{
+    if(!image) return alert("Please select an image");
+    try{
+        // create unique reference path to in storage
+        const imageRef = ref(storage, `upload/${Date.now()}_${image.name}`);
 
+        // upload the file
+        await uploadBytes(imageRef, image);
+
+        // get the downloadable url
+        const downloadImage = await getDownloadURL(imageRef);
+
+        // save image in firebase
+        await addDoc(collection(db,"image"), {
+            imageUrl: downloadURL,
+            createdAt:new Date()
+            })
+
+        alert("Image uploaded successfully");
+        setImage(null);
+    }
+    catch(error){
+        console.log("Error occured while uploading image", error);
+        alert("Faild upload image");
+    }
+}
+3. <input type="file" onChange={(e)=> setImage(e.target.files[0])} />
+4. <button onClick={uploadImage}> Upload image </button>
+
+✅ for multiple images
+
+1. const imageURLs = [];
+
+2. for(let image of images){
+    const imageRef = ref(storage, `upload/${Data.now()}_${image.name}`);
+    await uploadBytes(imageRef, image);
+    const downloadURL = await getDownloadURL(imageRef);
+    imageURLs.push(downloadURL);
+}
+
+3. <input type="file" multiple onChange={(e)=> setImages(Array.from(e.target.files))}>
+
+
+const LoginwithGoogle = async ()=>{
+    const provideer = new GoogleAuthProvider();
+    try{
+        const result = await singInWithGoogle(Auth, provider);
+        const credentials = GoogleAuthProvider.credentialsFromResult();
+        const token = credentials.token;
+        const user=result.user;
+    }
+}
