@@ -47,5 +47,7 @@
 - let arr: [number, string, boolean, number] = [23,"kumar",true, 25]
 - order maters in tuples.
 - make it secure and error free use readonly.
-* Named Tuple 
+
+# Named Tuple 
 - let arr:[x:string, y:boolean] = ["23",false];
+
