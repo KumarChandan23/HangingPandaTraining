@@ -1,5 +1,5 @@
 
-# What is NextJS
+# What is NextJS?
 - NextJs is created by Vercel.
 - NextJs is React framework for building full-stack web application.
 - NextJs provides Great performance, SEO, and developer experience.
@@ -15,3 +15,8 @@
 4. Optimization: Image, Font, and script optimization to improve your application's core web vitels and User experence.
 
 5. TypeScript: Improved support for typeScript with better type checking and more efficient compilation
+
+# Benefits of using Next.js over CRA
+- CRA stands for Create React App, which a tool to setup with Client Side Rendering only.
+- CRA is not part of NextJS.
+- It is completely separate way to build React App.

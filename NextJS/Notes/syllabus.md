@@ -1,61 +1,44 @@
-What is Next.js? Why use it?
+# 🧩 1. Introduction to Next.js
+- What is Next.js?
+- Benefits of using Next.js over CRA
+- Difference between client-side and server-side rendering
 
-Pages Router vs App Router
-
-Project setup using create-next-app
-
-File structure overview
-
-Running the dev server
+# 📁 2. Project Setup
+- Installing Next.js using create-next-app
+- Folder structure (pages, public, styles, etc.)
+- next.config.js basics
+- Environment variables (.env.local, .env.production)
 
 🗺️ 3. Routing in Next.js
 Pages Router:
-    Dynamic routing ([id].tsx)
-
-    Nested routes
-
-    Link navigation with next/link
+    - Dynamic routing ([id].tsx)
+    - Nested routes
+    - Link navigation with next/link
 
 App Router (Next.js 13+)
-
-    app/ folder structure
-
-    page.tsx and layout.tsx
-
-    Nested layouts
-
-    Route groups and parallel routes
-
-    Loading and error UI
+    - app/ folder structure
+    - page.tsx and layout.tsx
+    - Nested layouts
+    - Route groups and parallel routes
+    - Loading and error UI
 
 🎨 4. Styling
-    CSS Modules
-
-    Global CSS
-
-    Tailwind CSS setup and best practices
-
-    Responsive design with Tailwind
+    - CSS Modules
+    - Global CSS
+    - Tailwind CSS setup and best practices
+    - Responsive design with Tailwind
 
 🧠 5. Components & Props
-    Creating and reusing components
-
-    Passing props and children
-
-    Smart vs dumb components
-
-    Folder structure: /components
+    - Creating and reusing components
+    - Passing props and children
+    - Smart vs dumb components
+    - Folder structure: /components
 
 ⚙️ 6. Data Fetching
-    getStaticProps, getServerSideProps (Pages Router)
-
-    App Router data fetching with fetch() or async components
-
-    getStaticPaths for dynamic pages
-
-    useEffect() and client-side fetching
-
-    Caching, revalidation, and loading states
+    - App Router data fetching with fetch() or async components
+    - getStaticPaths for dynamic pages
+    - useEffect() and client-side fetching
+    - Caching, revalidation, and loading states
 
  7. API Routes (Backend in Frontend)
     Creating endpoints inside /pages/api or app/api
