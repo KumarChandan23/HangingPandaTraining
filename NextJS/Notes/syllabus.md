@@ -40,29 +40,13 @@ App Router (Next.js 13+)
     - useEffect() and client-side fetching
     - Caching, revalidation, and loading states
 
- 7. API Routes (Backend in Frontend)
-    Creating endpoints inside /pages/api or app/api
+🗃️ 8. State Management
+    - React’s useState, useReducer, useContext
+    - Global state using Context API or Zustand
+    - Optional: Redux Toolkit (if preferred by your company)
 
-    Handling requests and responses
-
-    Connecting with a DB or sending form data
-
-🔐 8. Authentication & Authorization
-
-    Setting up JWT or NextAuth.js
-
-    Protecting routes
-
-    Auth layouts & middleware
-
-🗃️ 9. State Management
-    React’s useState, useReducer, useContext
-
-    Global state using Context API or Zustand
-
-    Optional: Redux Toolkit (if preferred by your company)
 🧪 10. Forms & Validation
-Controlled components
+    - Controlled components
 
 Form handling with react-hook-form
 
